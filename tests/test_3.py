@@ -1,22 +1,18 @@
 import time
+import pytest
 from selenium.webdriver.common.by import By
 from lib.screenschoter import Screenshot
 from lib.authorization import Authorization
-from lib.driver import browser
-
-driver = browser.driver
 
 
-def authorization():
-    Authorization.standard_user(driver)
-
-
+@pytest.mark.usefixtures('chrome_headless')
 class Test_111:
     def test_adding_to_cart(self):
         """
         adding and removing a product from the shopping cart
         """
-        authorization()
+        driver = self.driver
+        Authorization.standard_user(driver)
         add_to_cart = driver.find_element(By.XPATH, "//button[@data-test='add-to-cart-sauce-labs-backpack']")
         add_to_cart.click()
         go_to_cart = driver.find_element(By.XPATH, "//a[@class='shopping_cart_link']")
@@ -26,7 +22,8 @@ class Test_111:
         remove_product.click()
 
     def test_menu(self):
-        authorization()
+        driver = self.driver
+        Authorization.standard_user(driver)
         menu = driver.find_element(By.XPATH, "//button[@id='react-burger-menu-btn']")
         menu.click()
         time.sleep(2)

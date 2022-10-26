@@ -1,18 +1,16 @@
+import pytest
 from selenium.webdriver.common.by import By
 from lib.screenschoter import Screenshot
 from lib.authorization import Authorization
-from lib.driver import browser
 
 
-driver = browser.driver
-
-
+@pytest.mark.usefixtures('chrome_headless')
 class Test_url:
-
     def test_url_verification_and_the_product_value(self):
         """
         checking the URL and the value of the product field
         """
+        driver = self.driver
         Authorization.standard_user(driver)
         Screenshot.screen(driver, "url_verification_and_the_product_value")
         text_products = driver.find_element(By.XPATH, '//span[@class="title"]')

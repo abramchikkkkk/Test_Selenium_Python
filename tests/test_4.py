@@ -1,21 +1,18 @@
 import time
+import pytest
 from selenium.webdriver.common.by import By
 from lib.screenschoter import Screenshot
 from lib.authorization import Authorization
-from lib.driver import browser
-
-driver = browser.driver
-
-def authorization():
-    Authorization.standard_user(driver)
 
 
+@pytest.mark.usefixtures('chrome_headless')
 class Test_smoke:
     def test_buy_product(self):
         """
          adding a product to the cart, placing an order
         """
-        authorization()
+        driver = self.driver
+        Authorization.standard_user(driver)
         """info product1"""
         product_1 = driver.find_element(By.XPATH, "//a[@id='item_4_title_link']")
         value_product1_name = product_1.text

@@ -1,16 +1,16 @@
+import pytest
 from selenium.webdriver.common.by import By
 from lib.screenschoter import Screenshot
 from lib.authorization import Authorization
-from lib.driver import browser
-
-driver = browser.driver
 
 
+@pytest.mark.usefixtures('chrome_headless')
 class Test_negative_authorization:
     def test_negative_login(self):
         """
         authorization with a negative login
         """
+        driver = self.driver
         Authorization.login_negative(driver)
         Screenshot.screen(driver, "negative_login")
         value_error = "Epic sadface: Username and password do not match any user in this service"
@@ -23,6 +23,7 @@ class Test_negative_authorization:
         """
         authorization with a negative password
         """
+        driver = self.driver
         Authorization.password_negative(driver)
         Screenshot.screen(driver, "negative_password")
         value_error = "Epic sadface: Username and password do not match any user in this service"
